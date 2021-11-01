@@ -59,5 +59,5 @@ var shouldShowOnboarding by remember { mutableStateOf(true) }
 - 다른 composable 에서 동일하게 호출하면 상태를 호이스팅 할 수 있다.
 
 ## 참고
-[Jetpack Compose basics](https://developer.android.com/codelabs/jetpack-compose-basics?continue=https%3A%2F%2Fdeveloper.android.com%2Fcourses%2Fpathways%2Fcompose%23codelab-https%3A%2F%2Fdeveloper.android.com%2Fcodelabs%2Fjetpack-compose-basics#0)
-[Box](https://foso.github.io/Jetpack-Compose-Playground/layout/box/)
+- [Jetpack Compose basics](https://developer.android.com/codelabs/jetpack-compose-basics?continue=https%3A%2F%2Fdeveloper.android.com%2Fcourses%2Fpathways%2Fcompose%23codelab-https%3A%2F%2Fdeveloper.android.com%2Fcodelabs%2Fjetpack-compose-basics#0)
+- [Box](https://foso.github.io/Jetpack-Compose-Playground/layout/box/)
