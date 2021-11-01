@@ -24,6 +24,12 @@ Surface(color = MaterialTheme.colors.primary) {
 Text(text = "Hello $name!", modifier = Modifier.padding(24.dp))
 ```
 
+### Reusing composables
+> UI에 더 많은 구성 요소를 추가할수록 더 많은 수준의 중첩이 생성됩니다. \
+  함수가 정말 커지면 가독성에 영향을 줄 수 있습니다. \
+  재사용 가능한 작은 구성 요소를 만들어 앱에서 사용되는 UI 요소 라이브러리를 쉽게 구축할 수 있습니다. \
+  각각은 화면의 작은 부분을 담당하며 독립적으로 편집할 수 있습니다.
+
 
 ## 참고
 [Jetpack Compose basics](https://developer.android.com/codelabs/jetpack-compose-basics?continue=https%3A%2F%2Fdeveloper.android.com%2Fcourses%2Fpathways%2Fcompose%23codelab-https%3A%2F%2Fdeveloper.android.com%2Fcodelabs%2Fjetpack-compose-basics#0)
