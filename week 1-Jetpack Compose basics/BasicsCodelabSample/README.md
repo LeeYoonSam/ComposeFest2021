@@ -24,6 +24,9 @@ Surface(color = MaterialTheme.colors.primary) {
 Text(text = "Hello $name!", modifier = Modifier.padding(24.dp))
 ```
 
+- `padding` : 해당 뷰에 padding 을 적용
+- `fillMaxWidth` : 해당 뷰의 width 를 꽉 채움
+
 ### Reusing composables
 > UI에 더 많은 구성 요소를 추가할수록 더 많은 수준의 중첩이 생성됩니다. \
   함수가 정말 커지면 가독성에 영향을 줄 수 있습니다. \
@@ -31,5 +34,12 @@ Text(text = "Hello $name!", modifier = Modifier.padding(24.dp))
   각각은 화면의 작은 부분을 담당하며 독립적으로 편집할 수 있습니다.
 
 
+### Compose의 세 가지 기본 표준 레이아웃 요소
+- `Column` : 내부의 각 자식을 세로로 배치
+- `Row` : 내부의 각 자식을 가로로 배치
+- `Box` : 내부의 자식은 서로 겹쳐집니다. 정렬 Modifier를 사용하여 컴포저블을 그려야 하는 위치를 지정할 수 있습니다.
+
+
 ## 참고
 [Jetpack Compose basics](https://developer.android.com/codelabs/jetpack-compose-basics?continue=https%3A%2F%2Fdeveloper.android.com%2Fcourses%2Fpathways%2Fcompose%23codelab-https%3A%2F%2Fdeveloper.android.com%2Fcodelabs%2Fjetpack-compose-basics#0)
+[Box](https://foso.github.io/Jetpack-Compose-Playground/layout/box/)
