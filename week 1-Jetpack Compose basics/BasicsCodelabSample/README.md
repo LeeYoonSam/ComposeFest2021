@@ -173,6 +173,15 @@ fun DefaultPreview() {
 }
 ```
 
+### IconButton
+
+- material-icons-extended
+
+```gradle
+implementation "androidx.compose.material:material-icons-extended:$compose_version"
+```
+
+
 ## 참고
 - [Jetpack Compose basics](https://developer.android.com/codelabs/jetpack-compose-basics?continue=https%3A%2F%2Fdeveloper.android.com%2Fcourses%2Fpathways%2Fcompose%23codelab-https%3A%2F%2Fdeveloper.android.com%2Fcodelabs%2Fjetpack-compose-basics#0)
 - [Box](https://foso.github.io/Jetpack-Compose-Playground/layout/box/)
