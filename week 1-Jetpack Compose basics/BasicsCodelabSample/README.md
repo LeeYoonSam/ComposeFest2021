@@ -76,6 +76,42 @@ var shouldShowOnboarding by remember { mutableStateOf(true) }
 - remember 는 구성 변경이 발생할때 데이터가 초기화 되어도 상관없을때 사용하면 될것 같다.
 - rememberSaveable 는 구성 변경이 발생하더라도 같은 데이터를 유지하고 싶을 때 사용하면 될것 같다.
 
+### Animating your list
+> Compose에는 간단한 애니메이션을 위한 고수준 API에서 전체 제어 및 복잡한 전환을 위한 저수준 메서드에 이르기까지 UI에 애니메이션을 적용하는 여러 가지 방법이 있습니다. [문서](https://developer.android.com/jetpack/compose/animation)에서 이에 대해 읽을 수 있습니다
+
+- `animateDpAsState` 컴포저블을 사용합니다. 애니메이션이 끝날 때까지 계속해서 값이 업데이트되는 `State 객체`를 반환합니다. 타입이 Dp인 `목표 값`을 취합니다.
+- 확장 상태에 따라 애니메이션 `extraPadding`을 만듭니다. 또한 property delegate(by 키워드)를 사용하겠습니다.
+
+```kotlin
+@Composable
+private fun Greeting(name: String) {
+
+    var expanded by remember { mutableStateOf(false) }
+
+    val extraPadding by animateDpAsState(
+        if (expanded) 48.dp else 0.dp,
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessLow
+        )
+    )
+
+    Surface(
+    ...
+            Column(modifier = Modifier
+                .weight(1f)
+                .padding(bottom = extraPadding.coerceAtLeast(0.dp))
+
+    ...
+
+    )
+}
+```
+
+- 다양한 유형의 애니메이션을 탐색하려면 스프링에 대해 다른 매개변수, 다른 사양(트윈, 반복 가능) 및 다른 기능(animateColorAsState 또는 다른 유형의 애니메이션 API)을 사용해 보십시오.
+- `animate*AsState`로 생성된 모든 애니메이션은 *중단 가능*합니다. 즉, 애니메이션 중간에 대상 값이 변경되면 `animate*AsState`가 애니메이션을 다시 시작하고 새 값을 가리킵니다.
+
+
 ## 참고
 - [Jetpack Compose basics](https://developer.android.com/codelabs/jetpack-compose-basics?continue=https%3A%2F%2Fdeveloper.android.com%2Fcourses%2Fpathways%2Fcompose%23codelab-https%3A%2F%2Fdeveloper.android.com%2Fcodelabs%2Fjetpack-compose-basics#0)
 - [Box](https://foso.github.io/Jetpack-Compose-Playground/layout/box/)
