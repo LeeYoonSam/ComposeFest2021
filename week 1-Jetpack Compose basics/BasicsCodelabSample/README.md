@@ -111,6 +111,67 @@ private fun Greeting(name: String) {
 - 다양한 유형의 애니메이션을 탐색하려면 스프링에 대해 다른 매개변수, 다른 사양(트윈, 반복 가능) 및 다른 기능(animateColorAsState 또는 다른 유형의 애니메이션 API)을 사용해 보십시오.
 - `animate*AsState`로 생성된 모든 애니메이션은 *중단 가능*합니다. 즉, 애니메이션 중간에 대상 값이 변경되면 `animate*AsState`가 애니메이션을 다시 시작하고 새 값을 가리킵니다.
 
+### Theme
+> `MaterialTheme`는 `Material` 디자인 사양의 스타일링 원칙을 반영하는 composable 함수입니다. 해당 스타일 정보는 콘텐츠 내부에 있는 구성 요소로 계단식으로 연결되며, 이 구성 요소는 정보를 읽어 스타일을 지정할 수 있습니다. 
+
+- `ui/Theme.kt` 파일을 열면 `BasicsCodelabTheme`이 구현에서 `MaterialTheme`를 사용하는 것을 볼 수 있습니다.
+
+```kotlin
+@Composable
+fun BasicsCodelabTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    content: @Composable() () -> Unit
+) {
+    val colors = if (darkTheme) {
+        DarkColorPalette
+    } else {
+        LightColorPalette
+    }
+
+    MaterialTheme(
+        colors = colors,
+        typography = Typography,
+        shapes = Shapes,
+        content = content
+    )
+}
+```
+
+- 테마에 맞게 ColorPalette 를 재설정하면 지정한 컬러로 테마에 사용하는 컬러가 변경된다.
+
+```kotlin
+private val DarkColorPalette = darkColors(
+    surface = Blue,
+    onSurface = Navy,
+    primary = Navy,
+    onPrimary = Chartreuse
+)
+
+private val LightColorPalette = lightColors(
+    surface = Blue,
+    onSurface = Color.White,
+    primary = LightBlue,
+    onPrimary = Navy
+)
+```
+
+- @Preview 에 옵션을 지정하면 Dark, Light 테마에 맞는 UI 를 미리 볼수 있다.
+
+```kotlin
+@Preview(
+    showBackground = true,
+    widthDp = 320,
+    uiMode = UI_MODE_NIGHT_YES,
+    name = "DefaultPreviewDark"
+)
+@Preview(showBackground = true, widthDp = 320)
+@Composable
+fun DefaultPreview() {
+    BasicsCodelabTheme {
+        Greetings()
+    }
+}
+```
 
 ## 참고
 - [Jetpack Compose basics](https://developer.android.com/codelabs/jetpack-compose-basics?continue=https%3A%2F%2Fdeveloper.android.com%2Fcourses%2Fpathways%2Fcompose%23codelab-https%3A%2F%2Fdeveloper.android.com%2Fcodelabs%2Fjetpack-compose-basics#0)
