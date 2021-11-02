@@ -58,6 +58,15 @@ var shouldShowOnboarding by remember { mutableStateOf(true) }
 
 - 다른 composable 에서 동일하게 호출하면 상태를 호이스팅 할 수 있다.
 
+
+### LazyColumn
+> 스크롤 가능한 열을 표시하기 위해 `LazyColumn`을 사용합니다. `LazyColumn`은 화면에 보이는 항목만 렌더링하므로 큰 목록을 렌더링할 때 성능이 향상됩니다.
+
+- `LazyColumn` 및 `LazyRow`는 Android View의 RecyclerView와 동일합니다.
+- 기본 사용법에서 `LazyColumn` API는 범위 내에서 개별 항목 렌더링 로직이 작성되는 항목 요소를 제공합니다.
+- 참고: Android Studio가 기본적으로 다른 아이템 함수를 선택하므로 `androidx.compose.foundation.lazy.items`를 가져와야 합니다.
+- 참고: `LazyColumn`은 `RecyclerView`와 같은 자식을 재활용하지 않습니다. 스크롤할 때 `새 Composable`을 내보내고 여전히 성능이 좋습니다. **Composable을 내보내는 것이 Android View를 인스턴스화하는 것에 비해 상대적으로 저렴하기 때문**입니다.
+
 ## 참고
 - [Jetpack Compose basics](https://developer.android.com/codelabs/jetpack-compose-basics?continue=https%3A%2F%2Fdeveloper.android.com%2Fcourses%2Fpathways%2Fcompose%23codelab-https%3A%2F%2Fdeveloper.android.com%2Fcodelabs%2Fjetpack-compose-basics#0)
 - [Box](https://foso.github.io/Jetpack-Compose-Playground/layout/box/)
