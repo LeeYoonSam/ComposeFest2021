@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import com.ys.basicscodelab.ui.theme.BasicsCodelabTheme
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -41,10 +43,12 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MyApp() {
 
-    var shouldShowOnboarding by remember { mutableStateOf(true) }
+    var shouldShowOnBoarding by rememberSaveable {
+        mutableStateOf(false)
+    }
 
-    if (shouldShowOnboarding) {
-        OnBoardingScreen(onContinueClicked = { shouldShowOnboarding = false })
+    if (shouldShowOnBoarding) {
+        OnBoardingScreen(onContinueClicked = { shouldShowOnBoarding = false })
     } else {
         Greetings()
     }

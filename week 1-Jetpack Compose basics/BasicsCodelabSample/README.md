@@ -67,6 +67,15 @@ var shouldShowOnboarding by remember { mutableStateOf(true) }
 - 참고: Android Studio가 기본적으로 다른 아이템 함수를 선택하므로 `androidx.compose.foundation.lazy.items`를 가져와야 합니다.
 - 참고: `LazyColumn`은 `RecyclerView`와 같은 자식을 재활용하지 않습니다. 스크롤할 때 `새 Composable`을 내보내고 여전히 성능이 좋습니다. **Composable을 내보내는 것이 Android View를 인스턴스화하는 것에 비해 상대적으로 저렴하기 때문**입니다.
 
+### Persisting state
+> 기기에서 앱을 실행하고 버튼을 클릭한 다음 회전하면 온보딩 화면이 다시 표시됩니다.\
+  `remember`는 컴포저블이 컴포지션에 유지되는 동안에만 작동합니다. 회전하면 전체 활동이 다시 시작되므로 모든 상태가 손실됩니다. 이는 구성 변경 및 프로세스 종료 시에도 발생합니다. \
+  `remember`를 사용하는 대신 `rememberSaveable`을 사용할 수 있습니다. 이렇게 하면 **구성 변경(예: 회전) 및 프로세스 종료에서 살아남은 각 상태가 저장**됩니다.\
+  이제 `shouldShowOnboarding`의 `remember` 사용을 `rememberSaveable`으로 바꿉니다.
+
+- remember 는 구성 변경이 발생할때 데이터가 초기화 되어도 상관없을때 사용하면 될것 같다.
+- rememberSaveable 는 구성 변경이 발생하더라도 같은 데이터를 유지하고 싶을 때 사용하면 될것 같다.
+
 ## 참고
 - [Jetpack Compose basics](https://developer.android.com/codelabs/jetpack-compose-basics?continue=https%3A%2F%2Fdeveloper.android.com%2Fcourses%2Fpathways%2Fcompose%23codelab-https%3A%2F%2Fdeveloper.android.com%2Fcodelabs%2Fjetpack-compose-basics#0)
 - [Box](https://foso.github.io/Jetpack-Compose-Playground/layout/box/)
