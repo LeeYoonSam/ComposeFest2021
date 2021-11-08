@@ -34,3 +34,23 @@ fun Button(
     content: @Composable () -> Unit
 )
 ```
+
+## Material Components
+> Compose에는 앱을 만드는 데 사용할 수 있는 기본 제공 Material Component 컴포저블이 함께 제공됩니다. 가장 높은 수준의 컴포저블은 Scaffold입니다.
+
+- `Scaffold` 및 `TopAppBar`는 Material 애플리케이션을 갖는 데 사용할 수 있는 몇 가지 구성 요소일 뿐입니다. `BottomNavigation` 또는 `BottomDrawer`와 같은 다른 머티리얼 구성 요소에 대해서도 동일한 작업을 수행할 수 있습니다. 연습으로 지금까지 했던 것과 같은 방식으로 해당 API로 스캐폴드 슬롯을 채우도록 초대합니다.
+
+### Scaffold
+- `Scaffold`를 사용하면 기본 Material Design 레이아웃 구조로 UI를 구현할 수 있습니다. `TopAppBar`, `BottomAppBar`, `FloatingActionButton` 및 `Drawer`와 같은 가장 일반적인 최상위 Material 구성 요소에 대한 슬롯을 제공합니다.
+- `Scaffold`에는 `@Composable () -> Unit` 유형의 `topBar` 매개변수가 있는 상단 `AppBar`용 슬롯이 있습니다. 즉, 원하는 구성 가능으로 슬롯을 채울 수 있습니다.
+
+
+### [More icons](https://fonts.google.com/icons?selected=Material+Icons)
+- 프로젝트에 새 종속성을 추가하여 전체 머티리얼 아이콘 목록을 사용할 수 있습니다.
+
+```gradle
+dependencies {
+  ...
+  implementation "androidx.compose.material:material-icons-extended:$compose_version"
+}
+```
