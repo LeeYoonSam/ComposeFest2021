@@ -69,6 +69,11 @@ fun PhotographerCard(modifier: Modifier = Modifier) {
     }
 }
 
+@Composable
+fun Button() {
+
+}
+
 @Preview
 @Composable
 fun PhotographerCardPreview() {
