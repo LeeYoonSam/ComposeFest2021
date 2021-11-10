@@ -219,3 +219,14 @@ private fun decoupledConstraints(margin: Dp): ConstraintSet {
     }
 }
 ```
+
+## Intrinsics
+> Compose의 규칙 중 하나는 자식을 한 번만 측정해야 한다는 것입니다. 자식을 두 번 측정하면 런타임 예외가 발생합니다. 그러나 자식을 측정하기 전에 자식에 대한 정보가 필요할 때가 있습니다.
+
+### `Intrinsics`를 사용하면 실제로 측정되기 전에 자식을 쿼리할 수 있습니다.
+> 컴포저블에 내장 너비 또는 내장 높이를 요청할 수 있습니다.
+
+- (min|max)IntrinsicWidth: 이 높이가 주어지면 콘텐츠를 적절하게 칠할 수 있는 최소/최대 너비가 얼마입니까?
+- (min|max)IntrinsicHeight: 이 너비가 주어지면 콘텐츠를 적절하게 칠할 수 있는 최소/최대 높이가 얼마입니까?
+- 예를 들어 무한 너비의 텍스트에 minIntrinsicHeight를 요청하면 텍스트가 한 줄에 그려진 것처럼 텍스트의 높이가 반환됩니다.
+
