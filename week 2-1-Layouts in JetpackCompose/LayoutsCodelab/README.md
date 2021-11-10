@@ -91,3 +91,131 @@ fun Modifier.customLayoutModifier(...) = Modifier.layout { measurable, constrain
 ## Layout modifiers under the hood
 ### Analysing a modifier
 > Modifier 및 LayoutModifier는 공용 인터페이스이므로 고유한 modifier를 만들 수 있습니다.
+
+## Constraint Layout
+> ConstraintLayout은 컴포저블을 화면의 다른 항목에 상대적으로 배치하는 데 도움이 될 수 있으며 여러 `Row`, `Column` 및 `Box`를 사용하는 대신 사용할 수 있습니다. \
+  ConstraintLayout은 더 복잡한 정렬 요구 사항이 있는 더 큰 레이아웃을 구현할 때 유용합니다.
+
+### 디펜던시 추가
+```gradle
+implementation "androidx.constraintlayout:constraintlayout-compose:1.0.0-alpha07"
+```
+
+- ConstraintLayout의 크기는 콘텐츠를 래핑할 수 있도록 가능한 한 작아집니다. 이것이 Text가 부모 대신 Button 중심에 있는 것처럼 보이는 이유입니다. \
+  다른 크기 조정 동작이 필요한 경우 크기 modifier를(예: fillMaxSize, 크기)는 Compose의 다른 레이아웃과 마찬가지로 ConstraintLayout composable에 적용되어야 합니다.
+
+### Helpers
+> DSL은 creating guidelines, barriers and chains을 지원합니다.
+
+```kotlin
+@Composable
+fun ConstraintLayoutContent() {
+    ConstraintLayout {
+        // Creates references for the three composables
+        // in the ConstraintLayout's body
+        val (button1, button2, text) = createRefs()
+
+        Button(
+            onClick = { /* Do something */ },
+            modifier = Modifier.constrainAs(button1) {
+                top.linkTo(parent.top, margin = 16.dp)
+            }
+        ) { 
+            Text("Button 1") 
+        }
+
+        Text("Text", Modifier.constrainAs(text) {
+            top.linkTo(button1.bottom, margin = 16.dp)
+            centerAround(button1.end)
+        })
+
+        val barrier = createEndBarrier(button1, text)
+        Button(
+            onClick = { /* Do something */ },
+            modifier = Modifier.constrainAs(button2) {
+                top.linkTo(parent.top, margin = 16.dp)
+                start.linkTo(barrier)
+            }
+        ) { 
+            Text("Button 2") 
+        }
+    }
+}
+```
+
+- barriers (and all the other helpers) can be created in the body of ConstraintLayout, but not inside constrainAs.
+- linkTo can be used to constrain with guidelines and barriers the same way it works for edges of layouts.
+
+### Customizing dimensions
+> 기본적으로 ConstraintLayout의 자식은 콘텐츠를 래핑하는 데 필요한 크기를 선택할 수 있습니다. 예를 들어, 이것은 텍스트가 너무 길 때 텍스트가 화면 경계를 벗어날 수 있음을 의미합니다.
+
+- `preferredWrapContent` the layout is wrap content, subject to the constraints in that dimension.
+- `wrapContent` the layout is wrap content even if the constraints would not allow it.
+- `fillToConstraints` the layout will expand to fill the space defined by its constraints in that dimension.
+- `preferredValue` the layout is a fixed dp value, subject to the constraints in that dimension.
+- `value` the layout is a fixed dp value, regardless of the constraints in that dimension
+
+```kotlin
+@Composable
+fun LargeConstraintLayout() {
+    ConstraintLayout {
+        val text = createRef()
+
+        val guideline = createGuidelineFromStart(0.5f)
+        Text(
+            "This is a very very very very very very very long text",
+            Modifier.constrainAs(text) {
+                linkTo(guideline, parent.end)
+                width = Dimension.preferredWrapContent
+            }
+        )
+    }
+}
+```
+
+### Decoupled API
+> 지금까지 예제에서는 제약 조건이 적용되는 컴포저블의 수정자와 함께 인라인으로 지정되었습니다.\
+  그러나 제약 조건이 적용되는 레이아웃에서 분리된 상태로 유지하는 것이 중요한 경우가 있습니다. \
+  일반적인 예는 화면 구성을 기반으로 제약 조건을 쉽게 변경하거나 2개의 제약 조건 세트 간에 애니메이션을 적용하는 것입니다.
+
+이러한 경우 다른 방식으로 ConstraintLayout을 사용할 수 있습니다.
+1. ConstraintSet을 ConstraintLayout에 매개변수로 전달합니다.
+2. layoutId 수정자를 사용하여 ConstraintSet에서 생성된 참조를 컴포저블에 할당합니다.
+
+```kotlin
+@Composable
+fun DecoupledConstraintLayout() {
+    BoxWithConstraints {
+        val constraints = if (maxWidth < maxHeight) {
+            decoupledConstraints(margin = 16.dp) // Portrait constraints
+        } else {
+            decoupledConstraints(margin = 32.dp) // Landscape constraints
+        }
+
+        ConstraintLayout(constraints) {
+            Button(
+                onClick = { /* Do something */ },
+                modifier = Modifier.layoutId("button")
+            ) {
+                Text("Button")
+            }
+
+            Text("Text", Modifier.layoutId("text"))
+        }
+    }
+}
+
+private fun decoupledConstraints(margin: Dp): ConstraintSet {
+    return ConstraintSet {
+        val button = createRefFor("button")
+        val text = createRefFor("text")
+
+        constrain(button) {
+            top.linkTo(parent.top, margin= margin)
+        }
+        constrain(text) {
+            top.linkTo(button.bottom, margin)
+        }
+    }
+}
+```
