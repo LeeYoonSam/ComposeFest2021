@@ -88,9 +88,6 @@ fun Modifier.customLayoutModifier(...) = Modifier.layout { measurable, constrain
 - `constraints`: 자식의 너비와 높이에 대한 최소 및 최대
 - `placeRelative`는 현재 `layoutDirection`을 기반으로 배치 가능한 위치를 자동으로 조정합니다.
 
-
-
-
-
-
-
+## Layout modifiers under the hood
+### Analysing a modifier
+> Modifier 및 LayoutModifier는 공용 인터페이스이므로 고유한 modifier를 만들 수 있습니다.
