@@ -10,6 +10,32 @@ This folder contains the source code for the [Using State in Jetpack Compose cod
 In this codelab, you will explore patterns for working with state in a declarative world by building a Todo application. We'll see what unidirectional
 data flow is, and how to apply it in a Jetpack Compose application to build stateless and stateful composables.
 
+## 배울것
+- 단방향 데이터 흐름이란
+- UI에서 상태 및 이벤트에 대해 생각하는 방법
+- Compose에서 Architecture Component의 ViewModel 및 LiveData를 사용하여 상태를 관리하는 방법
+- Compose가 상태를 사용하여 화면을 그리는 방법
+- 상태를 호출자로 이동해야 하는 경우
+- Compose에서 내부 상태를 사용하는 방법
+- State<T>를 사용하여 Compose와 상태를 통합하는 방법
+
+### The UI update loop
+- `Event` – 사용자 또는 프로그램의 다른 부분에 의해 이벤트가 생성됩니다. 
+- `Update State` – 이벤트 핸들러는 UI에서 사용하는 상태를 변경합니다.
+- `Display State` – 새 상태를 표시하도록 UI가 업데이트되었습니다.
+
+`Compose`에서 상태를 관리하는 것은 상태와 이벤트가 서로 상호 작용하는 방식을 이해하는 것입니다.
+
+- Observable은 누구나 해당 상태의 변경 사항을 수신할 수 있는 방법을 제공하는 상태 개체입니다.
+- `LiveData`, `StateFlow`, `Flow` 및 `Observable`은 모두 관찰 가능합니다.
+
+### 단방향 데이터 흐름
+> 단방향 데이터 흐름은 상태가 아래로 흐르고 이벤트가 위로 흐르는 디자인입니다. 이러한 방식으로 코드를 구성하면 몇 가지 이점을 얻을 수 있습니다.
+
+- 테스트 가능성 – 상태를 표시하는 UI에서 상태를 분리하여 ViewModel과 Activity를 모두 테스트하는 것이 더 쉽습니다.
+- 상태 캡슐화 – 상태는 한 곳(ViewModel)에서만 업데이트할 수 있으므로 UI가 커짐에 따라 부분 상태 업데이트 버그가 발생할 가능성이 적습니다.
+- UI 일관성 – 관찰 가능한 상태 홀더를 사용하여 모든 상태 업데이트가 UI에 즉시 반영됩니다.
+
 ## Screenshots
 
 ![Finished code](screenshots/state_movie.gif "After: Animation of fully completed project")
