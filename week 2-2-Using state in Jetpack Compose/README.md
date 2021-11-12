@@ -68,6 +68,26 @@ private fun TodoActivityScreen(todoViewModel: TodoViewModel) {
 - 컴포저블이 컴포지션에서 제거되면 자동으로 관찰을 중지합니다.
 
 
+### Memory in Compose
+
+**stateful composable**
+- stateful composable은 시간이 지남에 따라 변경될 수 있는 상태를 유지하는 컴포저블입니다.
+
+**Exploring recomposition**
+- 재구성은 데이터가 변경될 때 트리를 업데이트하기 위해 동일한 컴포저블을 다시 실행하는 프로세스입니다.
+- 재구성은 작성 트리를 업데이트하기 위해 새 입력으로 다시 composable을 호출하는 프로세스입니다. \
+  이 경우 새 목록으로 TodoScreen을 다시 호출하면 LazyColumn이 화면의 모든 자식을 재구성합니다. 그러면 TodoRow가 다시 호출되어 새로운 임의의 색조를 생성합니다.
+
+**remember**
+- remember는 composable 함수 메모리를 제공합니다.
+- A remember call has two parts:
+    - key arguments – 이 메모리가 사용하는 "키"는 괄호 안에 전달되는 부분입니다. 여기서 todo.id를 키로 전달합니다.
+    - calculation – remember할 새 값을 계산하는 람다로, 후행 람다로 전달됩니다. 여기에서 randomTint()를 사용하여 임의의 값을 계산합니다.
+
+```kotlin
+remember(todo.id) { randomTint() }
+```
+
 ## Screenshots
 
 ![Finished code](screenshots/state_movie.gif "After: Animation of fully completed project")
