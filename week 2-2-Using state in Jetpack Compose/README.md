@@ -36,6 +36,38 @@ data flow is, and how to apply it in a Jetpack Compose application to build stat
 - 상태 캡슐화 – 상태는 한 곳(ViewModel)에서만 업데이트할 수 있으므로 UI가 커짐에 따라 부분 상태 업데이트 버그가 발생할 가능성이 적습니다.
 - UI 일관성 – 관찰 가능한 상태 홀더를 사용하여 모든 상태 업데이트가 UI에 즉시 반영됩니다.
 
+### State hoisting
+> State hoisting은 구성 요소를 상태 비저장 상태로 만들기 위해 상태를 위로 이동하는 패턴입니다. 컴포저블에 적용할 때 이는 종종 컴포저블에 두 개의 매개변수를 도입하는 것을 의미합니다.
+
+- value: T – 표시할 현재 값
+- onValueChange: (T) -> Unit – 값 변경을 요청하는 이벤트, 여기서 T는 제안된 새 값입니다.
+
+### Surface
+> Surface는 앱에 배경을 추가하고 텍스트 색상을 구성합니다.
+
+- [Compose의 테마 설정](https://developer.android.com/jetpack/compose/themes?authuser=4)
+
+### [High-order functions and lambdas](https://kotlinlang.org/docs/lambdas.html)
+- Composable 에서 코틀린 람다 구문 사용 예
+
+```kotlin
+@Composable
+private fun TodoActivityScreen(todoViewModel: TodoViewModel) {
+   val items = listOf<TodoItem>()
+   TodoScreen(
+       items = items,
+       onAddItem = { todoViewModel.addItem(it) },
+       onRemoveItem = { todoViewModel.removeItem(it) }
+   )
+}
+```
+
+### Pass the state down
+- 단방향 데이터 흐름의 이벤트를 연결한 후 상태를 전달해야 합니다.
+- observeAsState는 LiveData를 관찰하고 LiveData가 변경될 때마다 업데이트되는 State 객체를 반환합니다.
+- 컴포저블이 컴포지션에서 제거되면 자동으로 관찰을 중지합니다.
+
+
 ## Screenshots
 
 ![Finished code](screenshots/state_movie.gif "After: Animation of fully completed project")
