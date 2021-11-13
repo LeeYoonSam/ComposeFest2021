@@ -125,6 +125,10 @@ val (value, setValue) = remember { mutableStateOf(default) }
 - `Recomposition`은 새로운 데이터를 기반으로 `composition 트리`의 구조를 변경할 수 있습니다.
 - 소프트웨어 키보드를 제어하기 위해 `LocalSoftwareKeyboardController.current`를 사용합니다. 이것은 실험적인 API이기 때문에 `@OptIn(ExperimentalComposeUiApi::class)`로 함수에 주석을 달아야 합니다.
 
+### 8. Extracting stateless composables
+- `stateless composables`으로 변환
+- `stateless composables`에는 모든 UI 관련 코드가 있고 `stateful composable`에는 UI 관련 코드가 없습니다. 이렇게 하면 상태를 다르게 지원하려는 상황에서 UI 코드를 재사용할 수 있습니다.
+- `Stateful 컴포저블`에서 `Stateless 컴포저블`을 추출하면 다른 위치에서 UI를 더 쉽게 재사용할 수 있습니다.
 
 ## Screenshots
 

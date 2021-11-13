@@ -60,7 +60,7 @@ fun TodoScreen(
     Column {
         // TodoScreen 상단에 TodoItemInputBackground 및 TodoItem 추가
         TodoItemInputBackground(elevate = true, modifier = Modifier.fillMaxWidth()) {
-            TodoItemInput(onItemComplete = onAddItem)
+            TodoItemEntryInput(onItemComplete = onAddItem)
         }
 
         LazyColumn(
@@ -141,14 +141,7 @@ fun PreviewTodoRow() {
 }
 
 @Composable
-fun TodoInputTextField(text: String, onTextChange: (String) -> Unit, modifier: Modifier) {
-    TodoInputText(text = text, onTextChange = onTextChange)
-}
-
-@Composable
-fun TodoItemInput(onItemComplete: (TodoItem) -> Unit) {
-    // onItemComplete는 사용자가 항목을 완료할 때 발생하는 이벤트입니다.
-
+fun TodoItemEntryInput(onItemComplete: (TodoItem) -> Unit) {
     val (text, setText) = remember { mutableStateOf("") }
     val (icon, setIcon) = remember { mutableStateOf(TodoIcon.Default) }
     val iconVisible = text.isNotBlank()
@@ -158,7 +151,26 @@ fun TodoItemInput(onItemComplete: (TodoItem) -> Unit) {
         setIcon(Companion.Default)
         setText("")
     }
+    
+    TodoItemInput(
+        text = text,
+        onTextChange = setText,
+        icon = icon,
+        onIconChange = setIcon,
+        submit = submit,
+        iconVisible = iconVisible
+    )
+}
 
+@Composable
+fun TodoItemInput(
+    text: String,
+    onTextChange: (String) -> Unit,
+    icon: TodoIcon,
+    onIconChange: (TodoIcon) -> Unit,
+    submit: () -> Unit,
+    iconVisible: Boolean
+) {
     Column {
         Row(
             Modifier
@@ -167,7 +179,7 @@ fun TodoItemInput(onItemComplete: (TodoItem) -> Unit) {
         ) {
             TodoInputText(
                 text = text,
-                onTextChange = setText,
+                onTextChange = onTextChange,
                 modifier = Modifier
                     .weight(1f)
                     .padding(end = 8.dp),
@@ -182,7 +194,7 @@ fun TodoItemInput(onItemComplete: (TodoItem) -> Unit) {
         }
 
         if (iconVisible) {
-            AnimatedIconRow(icon = icon, onIconChange = setIcon, modifier = Modifier.padding(top = 8.dp))
+            AnimatedIconRow(icon = icon, onIconChange = onIconChange, modifier = Modifier.padding(top = 8.dp))
         } else {
             Spacer(modifier = Modifier.height(16.dp))
         }
@@ -191,4 +203,4 @@ fun TodoItemInput(onItemComplete: (TodoItem) -> Unit) {
 
 @Preview
 @Composable
-fun PreviewTodoItemInput() = TodoItemInput(onItemComplete = { })
+fun PreviewTodoItemInput() = TodoItemEntryInput(onItemComplete = { })
