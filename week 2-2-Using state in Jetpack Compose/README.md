@@ -88,6 +88,38 @@ private fun TodoActivityScreen(todoViewModel: TodoViewModel) {
 remember(todo.id) { randomTint() }
 ```
 
+### State in Compose
+
+**stateful composable**
+- `stateful composable`은 시간이 지남에 따라 변경될 수 있는 상태를 소유하는 컴포저블입니다.
+
+**mutableStateOf를**
+- `mutableStateOf`를 저장하여 관찰 가능한 상태 홀더를 제공하는 Compose의 내장 유형인 MutableState<String>을 생성합니다.
+
+```kotlin
+interface MutableState<T> : State<T> {
+    override var value: T
+}
+```
+
+**mutableStateOf 또는 getValue가 정의되지 않았다는 컴파일러 오류가 발생하면 다음 가져오기가 있는지 확인하십시오.**
+
+```
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+```
+
+**MutableState 개체를 선언하는 세 가지 방법**
+```
+val state = remember { mutableStateOf(default) }
+var value by remember { mutableStateOf(default) }
+val (value, setValue) = remember { mutableStateOf(default) }
+```
+
+- 컴포지션에서 State<T>(또는 기타 상태 저장 개체)를 만들 때 이를 기억하는 것이 중요합니다. 그렇지 않으면 모든 구성이 다시 초기화됩니다.
+- MutableState<T>는 MutableLiveData<T>와 유사하지만 런타임에 통합됩니다. 관찰 가능하므로 업데이트될 때마다 compose에 알리고 compose는 이를 읽는 모든 구성 요소를 재구성할 수 있습니다.
+
 ## Screenshots
 
 ![Finished code](screenshots/state_movie.gif "After: Animation of fully completed project")
