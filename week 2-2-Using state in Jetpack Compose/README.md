@@ -130,6 +130,21 @@ val (value, setValue) = remember { mutableStateOf(default) }
 - `stateless composables`에는 모든 UI 관련 코드가 있고 `stateful composable`에는 UI 관련 코드가 없습니다. 이렇게 하면 상태를 다르게 지원하려는 상황에서 UI 코드를 재사용할 수 있습니다.
 - `Stateful 컴포저블`에서 `Stateless 컴포저블`을 추출하면 다른 위치에서 UI를 더 쉽게 재사용할 수 있습니다.
 
+
+### 9. Use State in ViewModel
+
+- 상태를 올릴 때 어디로 가야 하는지 파악하는 데 도움이 되는 세 가지 규칙이 있습니다.
+    1. 상태는 상태(또는 읽기)를 사용하는 모든 컴포저블 중 최소한 가장 낮은 공통 부모로 호이스트되어야 합니다.
+    2. 상태는 변경(또는 수정)될 수 있는 최소한 가장 높은 수준으로 호이스트되어야 합니다.
+    3. 동일한 이벤트에 대한 응답으로 두 상태가 변경되면 함께 호이스트되어야 합니다. 이러한 규칙이 요구하는 것보다 더 높은 수준으로 상태를 호이스트할 수 있지만 상태를 덜 호이스팅하면 단방향 데이터 흐름을 따르기가 어렵거나 불가능합니다.
+
+**`mutableStateListOf`를 사용하도록 ViewModel 변환**
+- `ViewModel`에서 `mutableStateListOf`를 사용하여 탐색하고 Compose를 대상으로 할 때 `LiveData<List>`와 비교하여 상태 코드를 단순화하는 방법
+- `mutableStateListOf`를 사용하면 관찰 가능한 `MutableList`의 인스턴스를 만들 수 있습니다. 이것은 `MutableList`로 작업하는 것과 같은 방식
+- `private set`을 지정함으로써 이 상태 객체에 대한 쓰기를 `ViewModel` 내부에서만 볼 수 있는 `private setter`로 제한하고 있습니다.
+- 주의: `mutableStateListOf` 및 `MutableState`로 수행된 작업은 `Compose`를 위한 것입니다. 이 `ViewModel`이 `View` 시스템에서도 사용되었다면 `LiveData`를 계속 사용하는 것이 좋습니다.
+- `State<T>`는 `Compose`에서 사용하기 위한 것입니다. `Compose` 외부에서 사용되는 애플리케이션 상태는 `State<T>`를 사용하여 상태를 유지해서는 안 됩니다.
+
 ## Screenshots
 
 ![Finished code](screenshots/state_movie.gif "After: Animation of fully completed project")
