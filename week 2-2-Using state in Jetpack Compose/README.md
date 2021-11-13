@@ -162,6 +162,17 @@ val (value, setValue) = remember { mutableStateOf(default) }
 - 슬롯은 호출자가 화면의 섹션을 설명할 수 있도록 하는 구성 가능한 함수에 대한 매개변수입니다. @Composable() -> Unit 유형의 매개변수를 사용하여 슬롯을 선언하십시오.
 
 
+### 참고
+[JetNews](https://github.com/android/compose-samples/)
+- JetNews는 상태 비저장 컴포저블을 사용하여 구축된 화면에서 상태를 관리하기 위해 상태 저장 컴포저블을 사용하기 위해 단방향 데이터 흐름을 사용하는 방법을 보여줍니다.
+
+**Reference docs**
+- [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel?authuser=4)
+- [remember](https://developer.android.com/reference/kotlin/androidx/compose/runtime/package-summary.html?authuser=4#remember(kotlin.Function0))
+- [State](https://developer.android.com/reference/kotlin/androidx/compose/runtime/State?authuser=4)
+- [MutableState](https://developer.android.com/reference/kotlin/androidx/compose/runtime/MutableState?authuser=4)
+
+
 ## Screenshots
 
 ![Finished code](screenshots/state_movie.gif "After: Animation of fully completed project")
