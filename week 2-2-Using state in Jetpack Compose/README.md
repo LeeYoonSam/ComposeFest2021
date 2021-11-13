@@ -148,6 +148,12 @@ val (value, setValue) = remember { mutableStateOf(default) }
 ### 10. Test State in ViewModel
 > 애플리케이션 로직이 올바른지 확인하기 위해 ViewModel을 테스트하는 것이 좋습니다. 이 섹션에서는 상태에 대해 `State<T>`를 사용하여 뷰 모델을 테스트하는 방법을 보여주는 테스트를 작성할 것입니다.
 
+### 11. Reuse stateless composables
+> 컴포저블에 여러 인수가 있는 경우 명명된 인수를 사용하는 것이 좋습니다.
+
+- `Stateless 컴포저블`은 상태가 저장되는 방식과 분리됩니다.
+- 이 예제에서는 ViewModel에 있는 목록의 요소로 TodoItemInlineEditor에 전달된 상태를 유지하고 있습니다. 그러나 TodoItemInlineEditor의 코드를 변경하지 않고도 Room 데이터베이스에 저장되도록 쉽게 변경할 수 있습니다.
+- `LazyColumn`은 현재 화면에 있는 항목만 구성하고 떠나는 즉시 폐기합니다. `RecyclerView`와 달리 재활용을 수행할 필요가 없습니다. `compose`는 보다 효율적인 방식으로 새 컴포저블 생성을 처리합니다.
 
 ## Screenshots
 
