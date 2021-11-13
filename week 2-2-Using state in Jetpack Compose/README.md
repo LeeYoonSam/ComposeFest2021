@@ -145,6 +145,10 @@ val (value, setValue) = remember { mutableStateOf(default) }
 - 주의: `mutableStateListOf` 및 `MutableState`로 수행된 작업은 `Compose`를 위한 것입니다. 이 `ViewModel`이 `View` 시스템에서도 사용되었다면 `LiveData`를 계속 사용하는 것이 좋습니다.
 - `State<T>`는 `Compose`에서 사용하기 위한 것입니다. `Compose` 외부에서 사용되는 애플리케이션 상태는 `State<T>`를 사용하여 상태를 유지해서는 안 됩니다.
 
+### 10. Test State in ViewModel
+> 애플리케이션 로직이 올바른지 확인하기 위해 ViewModel을 테스트하는 것이 좋습니다. 이 섹션에서는 상태에 대해 `State<T>`를 사용하여 뷰 모델을 테스트하는 방법을 보여주는 테스트를 작성할 것입니다.
+
+
 ## Screenshots
 
 ![Finished code](screenshots/state_movie.gif "After: Animation of fully completed project")
