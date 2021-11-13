@@ -68,7 +68,7 @@ private fun TodoActivityScreen(todoViewModel: TodoViewModel) {
 - 컴포저블이 컴포지션에서 제거되면 자동으로 관찰을 중지합니다.
 
 
-### Memory in Compose
+### 5. Memory in Compose
 
 **stateful composable**
 - stateful composable은 시간이 지남에 따라 변경될 수 있는 상태를 유지하는 컴포저블입니다.
@@ -88,7 +88,7 @@ private fun TodoActivityScreen(todoViewModel: TodoViewModel) {
 remember(todo.id) { randomTint() }
 ```
 
-### State in Compose
+### 6. State in Compose
 
 **stateful composable**
 - `stateful composable`은 시간이 지남에 따라 변경될 수 있는 상태를 소유하는 컴포저블입니다.
@@ -119,6 +119,12 @@ val (value, setValue) = remember { mutableStateOf(default) }
 
 - 컴포지션에서 State<T>(또는 기타 상태 저장 개체)를 만들 때 이를 기억하는 것이 중요합니다. 그렇지 않으면 모든 구성이 다시 초기화됩니다.
 - MutableState<T>는 MutableLiveData<T>와 유사하지만 런타임에 통합됩니다. 관찰 가능하므로 업데이트될 때마다 compose에 알리고 compose는 이를 읽는 모든 구성 요소를 재구성할 수 있습니다.
+
+### 7. Dynamic UI based on state
+
+- `Recomposition`은 새로운 데이터를 기반으로 `composition 트리`의 구조를 변경할 수 있습니다.
+- 소프트웨어 키보드를 제어하기 위해 `LocalSoftwareKeyboardController.current`를 사용합니다. 이것은 실험적인 API이기 때문에 `@OptIn(ExperimentalComposeUiApi::class)`로 함수에 주석을 달아야 합니다.
+
 
 ## Screenshots
 

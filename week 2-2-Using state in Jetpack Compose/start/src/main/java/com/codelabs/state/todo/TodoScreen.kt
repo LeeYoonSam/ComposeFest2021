@@ -21,7 +21,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -38,6 +40,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.codelabs.state.todo.TodoIcon.Companion
 import com.codelabs.state.util.generateRandomTodoItem
 import kotlin.random.Random
 
@@ -147,28 +150,41 @@ fun TodoItemInput(onItemComplete: (TodoItem) -> Unit) {
     // onItemComplete는 사용자가 항목을 완료할 때 발생하는 이벤트입니다.
 
     val (text, setText) = remember { mutableStateOf("") }
+    val (icon, setIcon) = remember { mutableStateOf(TodoIcon.Default) }
+    val iconVisible = text.isNotBlank()
+
+    val submit = {
+        onItemComplete(TodoItem(text, icon))
+        setIcon(Companion.Default)
+        setText("")
+    }
 
     Column {
-        Row(Modifier
-            .padding(horizontal = 16.dp)
-            .padding(top = 16.dp)
+        Row(
+            Modifier
+                .padding(horizontal = 16.dp)
+                .padding(top = 16.dp)
         ) {
-            TodoInputTextField(
+            TodoInputText(
                 text = text,
                 onTextChange = setText,
                 modifier = Modifier
                     .weight(1f)
-                    .padding(end = 8.dp)
+                    .padding(end = 8.dp),
+                onImeAction = submit // submit 콜백을 TodoInputText에 전달
             )
             TodoEditButton(
-                onClick = {
-                    onItemComplete(TodoItem(text)) // onItemComplete 이벤트 보내기
-                    setText("") // 내부 텍스트 지우기
-                },
+                onClick = submit, // submit 콜백을 TodoInputText에 전달
                 text = "Add",
                 modifier = Modifier.align(Alignment.CenterVertically),
                 enabled = text.isNotBlank()
             )
+        }
+
+        if (iconVisible) {
+            AnimatedIconRow(icon = icon, onIconChange = setIcon, modifier = Modifier.padding(top = 8.dp))
+        } else {
+            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 }
