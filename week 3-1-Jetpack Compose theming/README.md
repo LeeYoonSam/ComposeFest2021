@@ -118,6 +118,78 @@ BottomNavigationItem(
 > Compose에서 어두운 테마를 구현하려면 테마를 통해 다양한 색상 세트와 쿼리 색상을 제공하기만 하면 됩니다.
 
 
+## 6. Working with Text
+> 텍스트로 작업할 때 텍스트 구성 가능을 사용하여 텍스트를 표시하고 텍스트 입력을 위해 TextField 및 OutlinedTextField를 사용하고 텍스트에 단일 스타일을 적용하기 위해 TextStyle을 사용합니다. \
+  AnnotatedString을 사용하여 텍스트에 여러 스타일을 적용할 수 있습니다.
+
+- 색상에서 보았듯이 텍스트를 표시하는 머티리얼 구성 요소는 테마 타이포그래피 사용자 정의를 선택합니다.
+
+```kotlin
+Button(...) {
+  Text("This text will use MaterialTheme.typography.button style by default")
+}
+```
+
+- 이를 달성하는 것은 색상에서 본 기본 매개변수를 사용하는 것보다 약간 더 복잡합니다. 이는 구성 요소가 텍스트 자체를 표시하지 않는 경향이 있기 때문입니다. \
+  오히려 구성 요소가 텍스트 구성 가능을 전달할 수 있도록 하는 '슬롯 API'를 제공하기 때문입니다. \
+  그렇다면 컴포넌트는 어떻게 테마 타이포그래피 스타일을 설정할까요? \
+  내부적으로는 `ProvideTextStyle` composable(자체적으로 CompositionLocal을 사용함)을 사용하여 현재 TextStyle을 설정합니다. \
+  구체적인 textStyle 매개변수를 제공하지 않으면 Text composable은 기본적으로 이 현재 스타일을 쿼리합니다.
+
+```kotlin
+@Composable
+fun Button(
+    // many other parameters
+    text: @Composable RowScope.() -> Unit
+) {
+  ...
+  ProvideTextStyle(MaterialTheme.typography.button) { //set the "current" text style
+    ...
+    text()
+  }
+}
+
+
+@Composable
+fun Text(
+    // many, many parameters
+    style: TextStyle = LocalTextStyle.current // get the value set by ProvideTextStyle
+) { ...
+```
+
+**참고**
+- [AnnotatedString](https://developer.android.com/reference/kotlin/androidx/compose/ui/text/AnnotatedString.html?authuser=4)
+
+### Theme text styles
+> 색상과 마찬가지로 현재 테마에서 TextStyles를 검색하여 작고 일관된 스타일 세트를 사용하고 유지 관리하기 쉽게 만드는 것이 가장 좋습니다. \
+  MaterialTheme.typography는 MaterialTheme 컴포저블에 설정된 Typography 인스턴스를 검색하여 정의한 스타일을 사용할 수 있도록 합니다.
+
+```kotlin
+Text(
+  style = MaterialTheme.typography.subtitle2
+)
+```
+
+ -TextStyle을 사용자 정의해야 하는 경우 복사하고 속성을 재정의하거나(단지 데이터 클래스임) Text 구성 가능은 모든 TextStyle 위에 오버레이될 여러 스타일 매개변수를 허용합니다.
+- 앱의 많은 위치에서 테마 TextStyles를 자동으로 적용합니다. 예를 들어 TopAppBar는 제목을 h6으로 스타일을 지정하고 ListItem은 기본 및 보조 텍스트를 subtitle1 및 body2에 각각 스타일 지정합니다.
+- 테마 타이포그래피 스타일을 앱의 나머지 부분에 적용해 보겠습니다. 제목에 h6을 사용하고 작성자 및 메타데이터에 본문2를 사용하려면 FeaturedPost에서 subtitle2 및 텍스트를 사용하도록 헤더를 설정합니다.
+
+### Multiple styles
+> 일부 텍스트에 여러 스타일을 적용해야 하는 경우 AnnotatedString 클래스를 사용하여 텍스트 범위에 SpanStyles를 추가하여 마크업을 적용할 수 있습니다. 동적으로 추가하거나 DSL 구문을 사용하여 콘텐츠를 만들 수 있습니다.
+
+```kotlin
+val text = buildAnnotatedString {
+  append("This is some unstyled text\n")
+  withStyle(SpanStyle(color = Color.Red)) {
+    append("Red text\n")
+  }
+  withStyle(SpanStyle(fontSize = 24.sp)) {
+    append("Large text")
+  }
+}
+```
+
+
 # ComposeFest2021
 2021 DevFest ComposeFest 코드랩 Repo 입니다
 본 폴더를 Android Studio를 이용해서 열어주세요.
