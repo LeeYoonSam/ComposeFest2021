@@ -55,6 +55,69 @@ fun MaterialTheme(
 Material은 [어두운 테마 생성에 대한 디자인 지침](https://material.io/design/color/dark-theme.html#usage)을 제공합니다.
 
 
+## 5. Working with Color
+> 앱의 색상, 유형 스타일 및 모양을 설정하기 위해 고유한 테마를 만드는 방법을 살펴보았습니다.
+모든 Material 구성 요소는 이러한 사용자 정의를 기본적으로 사용합니다.
+예를 들어 FloatingActionButton 컴포저블은 기본적으로 테마의 2차 색상을 사용하지만 이 매개변수에 다른 값을 지정하여 대체 색상을 설정할 수 있습니다.
+
+```kotlin
+@Composable
+fun FloatingActionButton(
+  backgroundColor: Color = MaterialTheme.colors.secondary,
+  ...
+) {
+```
+
+- Material Component 가 사용하는 테마 색상을 보는 것은 구성 요소의 기본 매개변수로 지정되기 때문에 View와 비교하여 Compose에서 크게 단순화됩니다. \
+  [구성 요소의 선언](https://www.jetbrains.com/help/idea/navigating-through-the-source-code.html#go_to_declaration)으로 이동하여 이를 쉽게 확인할 수 있습니다.
+- 항상 기본 설정을 사용하고 싶지는 않습니다. 이 섹션에서는 앱에서 색상으로 작업하는 방법을 보여줍니다.
+
+### Theme Colors
+> 보다 유연한 접근 방식은 테마에서 색상을 검색하는 것입니다.
+
+```kotlin
+Surface(color = MaterialTheme.colors.primary)
+```
+
+### Surface & Content colors
+> 많은 구성 요소는 한 쌍의 색상 및 "콘텐츠 색상"을 허용합니다.
+
+```kotlin
+Surface(
+  color: Color = MaterialTheme.colors.surface,
+  contentColor: Color = contentColorFor(color),
+  ...
+
+TopAppBar(
+  backgroundColor: Color = MaterialTheme.colors.primarySurface,
+  contentColor: Color = contentColorFor(backgroundColor),
+  ...
+```
+
+- [LocalContentColor](https://developer.android.com/reference/kotlin/androidx/compose/material/package-summary?authuser=4#LocalContentColor()) [CompositionLocal](https://developer.android.com/reference/kotlin/androidx/compose/runtime/CompositionLocal?authuser=4)을 사용하여 현재 배경과 대조되는 색상을 검색할 수 있습니다.
+
+```kotlin
+BottomNavigationItem(
+  unselectedContentColor = LocalContentColor.current ...
+```
+
+### Content Alpha
+> 종종 우리는 중요성을 전달하고 시각적 계층 구조를 제공하기 위해 콘텐츠를 강조하거나 강조하지 않으려고 합니다. Material Design에서는 이러한 다양한 중요도 수준을 전달하기 위해 다양한 불투명도 수준을 사용할 것을 권장합니다.
+
+- [Text legibility](https://material.io/design/color/text-legibility.html#legibility-standards)
+- Jetpack Compose는 LocalContentAlpha를 통해 이를 구현합니다. \
+  이 CompositionLocal에 대한 값을 제공하여 계층에 대한 콘텐츠 알파를 지정할 수 있습니다. \
+  자식 컴포저블은 이 값을 사용할 수 있습니다. 예를 들어 Text 및 Icon은 기본적으로 LocalContentAlpha를 사용하도록 조정된 LocalContentColor 조합을 사용합니다. \
+  Material은 ContentAlpha 개체에 의해 모델링되는 일부 표준 알파 값(높음, 중간, 비활성화됨)을 지정합니다. \
+  MaterialTheme는 LocalContentAlpha를 ContentAlpha.high로 기본 설정합니다.
+
+- 여기에서는 colors 속성이 MaterialTheme 구성 요소에 설정된 Colors를 반환하는 MaterialTheme 객체를 사용하고 있습니다.
+- 테마에 다른 색상 세트를 제공하기만 하면 다양한 모양과 느낌을 지원할 수 있으며 애플리케이션 코드를 건드릴 필요가 없습니다.
+
+### Dark Theme
+> Compose에서 어두운 테마를 구현하려면 테마를 통해 다양한 색상 세트와 쿼리 색상을 제공하기만 하면 됩니다.
+
+
 # ComposeFest2021
 2021 DevFest ComposeFest 코드랩 Repo 입니다
 본 폴더를 Android Studio를 이용해서 열어주세요.
