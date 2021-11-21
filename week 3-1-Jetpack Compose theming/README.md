@@ -190,6 +190,53 @@ val text = buildAnnotatedString {
 ```
 
 
+## 7. Working with Shapes
+> 색상 및 타이포그래피와 마찬가지로 모양 테마를 설정하면 Material 구성 요소에 반영됩니다.
+
+- 예를 들어 Button은 작은 구성 요소에 대해 설정된 모양을 선택합니다.
+
+```kotlin
+@Composable
+fun Button( ...
+  shape: Shape = MaterialTheme.shapes.small
+) {
+```
+
+- 색상과 마찬가지로 Material 구성 요소는 기본 매개변수를 사용하므로 구성 요소가 사용할 모양 범주를 확인하거나 대안을 제공하는 것이 간단합니다. 모양 범주에 대한 구성 요소의 전체 매핑은 [설명서](https://material.io/design/shape/applying-shape-to-ui.html#shape-scheme)를 참조하십시오.
+
+- 일부 구성 요소는 컨텍스트에 맞게 수정된 테마 모양을 사용합니다. 예를 들어 기본적으로 TextField는 작은 모양 테마를 사용하지만 아래쪽 모서리에는 모서리 크기가 0으로 적용됩니다.
+
+```kotlin
+@Composable
+fun FilledTextField(
+  // other parameters
+  shape: Shape = MaterialTheme.shapes.small.copy(
+    bottomStart = ZeroCornerSize, // overrides small theme style
+    bottomEnd = ZeroCornerSize // overrides small theme style
+  )
+) {
+```
+
+### Theme shapes
+> 물론 모양을 허용하는 컴포저블 또는 수정자를 사용하여 고유한 구성 요소를 만들 때 모양을 직접 사용할 수 있습니다. \
+  Surface, Modifier.clip, Modifier.background, Modifier.border 등
+
+```kotlin
+@Composable
+fun UserProfile(
+  ...
+  shape: Shape = MaterialTheme.shapes.medium
+) {
+  Surface(shape = shape) {
+    ...
+  }
+}
+```
+
+**참고**
+- [Surface](https://developer.android.com/reference/kotlin/androidx/compose/material/package-summary?authuser=4#Surface(androidx.compose.ui.Modifier,androidx.compose.ui.graphics.Shape,androidx.compose.ui.graphics.Color,androidx.compose.ui.graphics.Color,androidx.compose.foundation.BorderStroke,androidx.compose.ui.unit.Dp,kotlin.Function0))
+- [Modifier.clip](https://developer.android.com/reference/kotlin/androidx/compose/ui/draw/package-summary?authuser=4#clip(androidx.compose.ui.Modifier,androidx.compose.ui.graphics.Shape))
+
 # ComposeFest2021
 2021 DevFest ComposeFest 코드랩 Repo 입니다
 본 폴더를 Android Studio를 이용해서 열어주세요.
