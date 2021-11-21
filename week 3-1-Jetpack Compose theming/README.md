@@ -237,6 +237,55 @@ fun UserProfile(
 - [Surface](https://developer.android.com/reference/kotlin/androidx/compose/material/package-summary?authuser=4#Surface(androidx.compose.ui.Modifier,androidx.compose.ui.graphics.Shape,androidx.compose.ui.graphics.Color,androidx.compose.ui.graphics.Color,androidx.compose.foundation.BorderStroke,androidx.compose.ui.unit.Dp,kotlin.Function0))
 - [Modifier.clip](https://developer.android.com/reference/kotlin/androidx/compose/ui/draw/package-summary?authuser=4#clip(androidx.compose.ui.Modifier,androidx.compose.ui.graphics.Shape))
 
+
+## 8. Component Styles
+> Compose는 Android 보기 스타일 또는 CSS 스타일과 같은 구성 요소의 스타일을 추출하는 명시적인 방법을 제공하지 않습니다. \
+  모든 Compose 구성 요소는 Kotlin으로 작성되므로 동일한 목표를 달성하는 다른 방법이 있습니다. \
+  대신 사용자 지정 구성 요소의 자체 라이브러리를 만들고 앱 전체에서 사용하십시오.
+
+- 우리는 모든 구성 요소가 더 낮은 수준의 구성 요소로 구성되어 있음을 확인했습니다. 동일한 구성 요소를 사용하여 재료 구성 요소를 사용자 지정할 수 있습니다.
+- 예를 들어 Button은 전달된 콘텐츠의 기본 텍스트 스타일을 설정하기 위해 `ProvideTextStyle` composable을 사용하는 것을 보았습니다. 똑같은 메커니즘을 사용하여 자신만의 텍스트 스타일을 설정할 수 있습니다.
+
+```kotlin
+@Composable
+fun LoginButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    content: @Composable RowScope.() -> Unit
+) {
+    Button(
+        colors = ButtonConstants.defaultButtonColors(
+            backgroundColor = MaterialTheme.colors.secondary
+        ),
+        onClick = onClick,
+        modifier = modifier
+    ) {
+        ProvideTextStyle(...) { // set our own text style
+            content()
+        }
+    }
+}
+```
+
+- 이 예제에서는 표준 Button 클래스를 래핑하여 LoginButton의 "스타일"을 만들고 다른 backgroundColor 및 텍스트 스타일과 같은 특정 속성을 지정합니다.
+
+- 라이브러리 구성 요소를 래핑하고 사용자 지정하는 고유한 구성 요소를 만들어 이를 달성할 수 있습니다.
+- 예를 들어 앱 전체에서 모든 버튼의 모양을 사용자 지정하고 싶지만 다른(비 버튼) 구성 요소에 영향을 미칠 수 있는 shapes.small 테마를 변경하고 싶지 않다고 가정해 보겠습니다.
+
+```kotlin
+@Composable
+fun AcmeButton(
+  // expose Button params consumers should be able to change
+) {
+  val acmeButtonShape: Shape = ...
+  Button(
+    shape = acmeButtonShape,
+    // other params
+  )
+}
+```
+
+
 # ComposeFest2021
 2021 DevFest ComposeFest 코드랩 Repo 입니다
 본 폴더를 Android Studio를 이용해서 열어주세요.
