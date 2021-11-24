@@ -33,8 +33,10 @@ Navigation 라이브러리는 Jetpack Compose로 구축된 화면 내에서 일�
 
 ```
 adb shell am start -d "rally://accounts/Checking" -a android.intent.action.VIEW
+adb shell am start -d '"rally://accounts/Home Savings"' -a android.intent.action.VIEW
 ```
 
+- 공백 문자열에는 큰따옴표, 작은따옴표를 같이 사용
 
 # ComposeFest2021
 Navigation 코드랩 자료입니다.
