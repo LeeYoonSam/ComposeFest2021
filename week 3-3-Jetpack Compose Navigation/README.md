@@ -27,6 +27,14 @@ Navigation 라이브러리는 Jetpack Compose로 구축된 화면 내에서 일�
 4. 원래 목적지 메커니즘을 탐색 경로로 교체
 
 
+## 5. Enable deep link support
+> 인수 외에도 딥 링크를 사용하여 앱의 대상을 타사 앱에 노출할 수도 있습니다. \
+  이 섹션에서는 이전 섹션에서 생성한 경로에 대한 새로운 딥 링크를 추가하여 앱 외부에서 이름으로 직접 개별 계정으로 딥 링크를 활성화합니다.
+
+```
+adb shell am start -d "rally://accounts/Checking" -a android.intent.action.VIEW
+```
+
 
 # ComposeFest2021
 Navigation 코드랩 자료입니다.
