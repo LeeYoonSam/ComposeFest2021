@@ -26,6 +26,7 @@ Navigation 라이브러리는 Jetpack Compose로 구축된 화면 내에서 일�
 3. 목적지에 대한 경로 준비
 4. 원래 목적지 메커니즘을 탐색 경로로 교체
 
+## 4. Navigating with arguments
 
 ## 5. Enable deep link support
 > 인수 외에도 딥 링크를 사용하여 앱의 대상을 타사 앱에 노출할 수도 있습니다. \
@@ -37,6 +38,15 @@ adb shell am start -d '"rally://accounts/Home Savings"' -a android.intent.action
 ```
 
 - 공백 문자열에는 큰따옴표, 작은따옴표를 같이 사용
+
+## 6. Extract finished NavHost
+
+## 7. Testing Navigation in Compose
+> 이 코드랩을 시작할 때부터 우리는 navController를 컴포저블에 직접 전달하지 않고 대신 콜백을 매개변수로 전달했습니다. \
+  즉, 모든 컴포저블을 개별적으로 테스트할 수 있습니다. 그러나 전체 NavHost를 테스트할 수도 있으며 이것이 이 단계의 전부입니다. \
+  개별 구성 가능 기능을 테스트하려면 [Jetpack Compose 코드랩에서 테스트](https://developer.android.com/codelabs/jetpack-compose-testing?authuser=4#0)를 확인하세요.
+
+
 
 # ComposeFest2021
 Navigation 코드랩 자료입니다.
