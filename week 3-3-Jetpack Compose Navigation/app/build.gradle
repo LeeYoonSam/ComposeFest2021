@@ -108,6 +108,7 @@ dependencies {
     implementation "androidx.navigation:navigation-compose:2.4.0-alpha10"
 
     // Testing dependencies
+    androidTestImplementation "androidx.test:core:1.4.0"
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$rootProject.espressoVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoVersion"
